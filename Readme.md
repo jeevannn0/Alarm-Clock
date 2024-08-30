@@ -3,7 +3,7 @@ Deployed Website : https://jeevannn0.github.io/Alarm-Clock/
 
 
 1.Clock ->
-     Approach for clock is to use date. using asyrnchnous setInterval() 
+Approach for clock is to use date. using asyrnchnous setInterval() 
 
 2.Inputs ->
 [Hour, Minute, Second, AM/PM ] are the different Inputs that are needed from USER.
