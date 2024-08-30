@@ -6,7 +6,7 @@ Deployed Website : https://jeevannn0.github.io/Alarm-Clock/
 Approach for clock is to use date. using asyrnchnous setInterval() 
 
 2.Inputs ->
-[Hour, Minute, Second, AM/PM ] are the different Inputs that are needed from USER.
+Hour, Minute, Second, AM/PM are the different Inputs that are needed from USER.
 Input type can also be used, but in this applicaiton Select Tag with Options are used.
 By default the current Time when the document is loaded is shown.
 On changing the units, its time for Alarm Set.
@@ -18,7 +18,7 @@ In the List Item user have the option of deleting current alarm.
 When user deletes the current Alarm , it is deleted from the Alarm Array.
 Since it's deleted from Alarm Array the The Alarm will not ring.
 
-4. Shut Alarm ->
+4. Stop Alarm ->
 When any of the alarm is ringing  there shows a option to shut the alarm
 The Shut Alarm button is displayed at the bottom of set alarm button.
 when the shut alarm is clicked ,using event listener the alarm is shutted.
