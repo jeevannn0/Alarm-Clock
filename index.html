@@ -4,33 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Alarm</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<link rel="stylesheet" href="style.css">
 <body>
-    <!-- Audio Tag that is used to play the alarm -->
     <audio id="alarmSound" src="ring.mp3" preload="auto"></audio>
 
     <main>
-        <!-- Heading -->
         <div class="heading">
-            <h1 id="alarm_title">
-                Digital Alarm Clock
-            </h1>
+            <h1 id="alarm_title">Digital Alarm Clock</h1>
         </div>
 
-        <!-- Main Alarm Section -->
         <div class="lhs">
-            <!-- clock container with real time clock and date -->
             <div id="clock_container">
                 <p id="date"></p>
-                <br/>
                 <p id="clock">00:00:00</p>
             </div>
-        
-            <!-- User input for setting alarm time -->
+
             <div id="alarm_container">
                 <div id="alarm_types">
-                    <select class="alarm_time" name="hour" id="hour" value="00"></select>
+                    <select class="alarm_time" name="hour" id="hour"></select>
                     <select class="alarm_time" name="minute" id="minute"></select>
                     <select class="alarm_time" name="seconds" id="second"></select>
                 </div>
@@ -38,18 +30,15 @@
                     <option value="AM">AM</option>
                     <option value="PM">PM</option>
                 </select>
-        
                 <button id="set_alarm_button">Set Alarm</button>
+                <button id="shut_alarm_button" style="display: none;">Stop Alarm</button>
             </div>
         </div>
-    
+
         <div class="rhs">
-            <!-- Heading for My Alarms -->
-            <h1 id="myAlarms_heading" style="margin-left: 670px; display: none;">My Alarms</h1>
+            <h1 id="myAlarms_heading" style="display: none;">My Alarms</h1>
             <div class="myAlarms">
-                <!-- List of alarms -->
-                <ul class="alarmList">
-                </ul>
+                <ul class="alarmList"></ul>
             </div>
         </div>
     </main>
