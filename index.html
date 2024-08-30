@@ -8,15 +8,13 @@
 <link rel="stylesheet" href="style.css">
 <body>
     <!-- Audio Tag that is used to play the alarm -->
-    <audio></audio>
+    <audio id="alarmSound" src="ring.mp3" preload="auto"></audio>
 
-
-     
     <main>
         <!-- Heading -->
         <div class="heading">
             <h1 id="alarm_title">
-                digital alarm clock
+                Digital Alarm Clock
             </h1>
         </div>
 
@@ -27,13 +25,9 @@
                 <p id="date"></p>
                 <br/>
                 <p id="clock">00:00:00</p>
-                
             </div>
         
-            <!--
-                
-                 - used to select user input on Time [hour:min:sec AM/PM]
-                -->
+            <!-- User input for setting alarm time -->
             <div id="alarm_container">
                 <div id="alarm_types">
                     <select class="alarm_time" name="hour" id="hour" value="00"></select>
@@ -46,30 +40,19 @@
                 </select>
         
                 <button id="set_alarm_button">Set Alarm</button>
-
-                <!-- set alarm button
-                    By default it is set as invisible
-                    When any alarm gets ring this appears
-                -->
-                <button id="shut_alarm_button">Stop Alarm</button>
             </div>
         </div>
     
-        
         <div class="rhs">
-            <!-- Heading which is initially invisible
-                but when any alarm is set it gets displayed    
-            -->
-            <h1 id="myAlarms_heading" style="margin-left: 670px;">My Alarms</h1>
+            <!-- Heading for My Alarms -->
+            <h1 id="myAlarms_heading" style="margin-left: 670px; display: none;">My Alarms</h1>
             <div class="myAlarms">
-                <!-- All the alarms are appended inside the UL -->
+                <!-- List of alarms -->
                 <ul class="alarmList">
-        
                 </ul>
             </div>
         </div>
     </main>
-
 
     <script src="index.js"></script>
 </body>
