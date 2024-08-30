@@ -1,84 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A alarm clock application">
-    <title>Alarm Clock</title>
-
-    <!-- Favicon -->
-    <link rel="icon" href="media/website-logo.png">
-
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css">
-
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Digital Alarm</title>
 </head>
-
+<link rel="stylesheet" href="style.css">
 <body>
-    <!-- Page Title -->
-    <header class="page-title">
-        <h1> Alarm Clock</h1>
-    </header>
+    <!-- Audio Tag that is used to play the alarm -->
+    <audio></audio>
 
-    <!-- Main Container -->
-    <main class="main-container d-flex">
-        <!-- Clock Container -->
-        <section class="clock-container d-flex">
-            <div class="wrapper flex">
-                <div class="container">
-                    <img src="media/website-logo.png" alt="Logo" class="logo">
-                </div>
+    <!-- 
+        Division of the Application
+        Main
+            - Heading
+            - LHS
+            - RHS
+     -->
+     
+    <main>
+        <!-- Heading -->
+        <div class="heading">
+            <h1 id="alarm_title">
+                digital alarm clock
+            </h1>
+        </div>
 
-                <!-- Date and Time -->
-                <div class="datetime">
-                    <div class="date" id="current-date">
-                        <span id="week">Week</span>,
-                        <span id="month">Month</span>
-                        <span id="date">00</span>,
-                        <span id="year">Year</span>
-                    </div>
-                </div>
-
-                <div class="current-time mb" id="current-time">HH: MM: SS</div>
-
-                <!-- Alarm Form -->
-                <form class="alarm-form d-flex mb" id="alarm-form">
-                    <div>
-                        <select name="hours"  id="hours" required></select>
-                        <select name="minutes" id="minutes" required></select>
-                        <select name="seconds" id="seconds" required></select>
-                        <select name="am-pm" id="am-pm" required>
-                            <option value="" selected hidden>AM/PM</option>
-                            <option value="AM" >AM</option>
-                            <option value="PM">PM</option>
-                        </select>
-                    </div>
-                    <button class="btn submit-button" id="submitButton" type="submit">Set Alarm</button>
-                
-                    <div class="button-container">
-                        <button id="stopAlarm" class="btn stop-button" onclick="stopAlarm()">Stop Alarm <i class="fas fa-stop"></i></button>
-                    </div>
-                </form>
-                
-
-                <!-- Stop Alarm Button -->
-              
-
-                <!-- Recent Alarms Container -->
-                <div class="set-alarm-container">
-                    <div class="set-alarm-container-title mb">Recent Alarms</div>
-                    <div class="alarms-container" id="alarms-container"></div>
-                </div>
+        <!-- Main Alarm Section -->
+        <div class="lhs">
+            <!-- clock container with real time clock and date -->
+            <div id="clock_container">
+                <p id="clock">00:00:00</p>
+                <p id="date"></p>
             </div>
-        </section>
+        
+            <!--
+                 Mid portion of LHS
+                 - used to select user input on Time [hour:min:sec AM/PM]
+                -->
+            <div id="alarm_container">
+                <div id="alarm_types">
+                    <select class="alarm_time" name="hour" id="hour" value="00"></select>
+                    <select class="alarm_time" name="minute" id="minute"></select>
+                    <select class="alarm_time" name="seconds" id="second"></select>
+                </div>
+                <select class="alarm_time_am_pm" name="am_pm" id="am_pm">
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
+                </select>
+        
+                <button id="set_alarm_button">set Alarm</button>
+
+                <!-- set alarm button
+                    By default it is set as invisible
+                    When any alarm gets ring this appears
+                -->
+                <button id="shut_alarm_button">SHUT ALARM</button>
+            </div>
+        </div>
+    
+        <!-- RHS contains the list of Alarms set -->
+        <div class="rhs">
+            <!-- Heading which is initially invisible
+                but when any alarm is set it gets displayed    
+            -->
+            <h1 id="myAlarms_heading" style="display: none;">My Alarms</h1>
+            <div class="myAlarms">
+                <!-- All the alarms are appended inside the UL -->
+                <ul class="alarmList">
+        
+                </ul>
+            </div>
+        </div>
     </main>
 
-    <!-- JavaScript File -->
-    <script src="./index.js"></script>
-</body>
 
+    <script src="index.js"></script>
+</body>
 </html>
