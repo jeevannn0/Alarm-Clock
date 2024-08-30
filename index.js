@@ -1,274 +1,123 @@
-/*
-    - All the elements of clock date and button are fetched
-*/
-let clockElement = document.querySelector('#clock');
-let current_day = document.querySelector('#date');
-let setAlarm_btn = document.querySelector('#set_alarm_button');
+// Select elements
+const clockElement = document.querySelector('#clock');
+const currentDay = document.querySelector('#date');
+const setAlarmBtn = document.querySelector('#set_alarm_button');
+const audio = new Audio('ring.mp3');
+const toggleButton = document.querySelector('#toggle_button');
+const alarmList = document.querySelector('.alarmList');
+const shutAlarmBtn = document.querySelector('#shut_alarm_button');
+const alarms = [];
 
-// Alarm array that takes object of Alarms as input 
-// List is displayed using this only
-let alarms = [];
-
-// Audio to be played
-let audio  = document.querySelector('audio');
-audio.src = "ring.mp3";
-
-let lightMode = true;
-let toggleButton = document.querySelector('#toggle_button');
-
-//  it is executed each second using set interval
-// At the buttom it could be seen
-function setTime(){
-
-    // get the current date using which we can get the time in seconds/hour and minute
-    let date = new Date();
+// Set and format the current time
+function formatTime(date) {
     let hour = date.getHours();
-    let min = date.getMinutes();
-    let sec = date.getSeconds();
-    
-    // current date to be visible
-    let day = String(date.getDate()).padStart(2, '0');
-    let month = String(date.getMonth() + 1).padStart(2, '0');
-    let year = date.getFullYear();
-    
-    let am_pm = 'AM';
+    const min = String(date.getMinutes()).padStart(2, '0');
+    const sec = String(date.getSeconds()).padStart(2, '0');
+    const am_pm = hour >= 12 ? 'PM' : 'AM';
 
-    // convert the 24 hour format to 12 hour format and change AM/PM as required
-    if(hour>=12){
-        hour = hour - 12;
-        am_pm = 'PM';
-    }
+    hour = hour % 12 || 12; // Convert 24-hour format to 12-hour format
+    const formattedHour = String(hour).padStart(2, '0');
 
-    if(hour==0){
-        hour = 12;
-    }
-
-    // append 0 before the time if time is single digit 
-    // This is done to make the id simple to use
-    if(hour<10){
-        hour = 0+""+hour;
-    }
-
-    if(min<10){
-        min = 0+""+min;
-    }
-
-    if(sec<10){
-        sec = 0+""+sec;
-    }
-
-
-    //  change stying of some elements on the basis of AM and PM
-    if(am_pm==='PM'){
-        current_day.style.color = 'white';
-    }
-    else{
-        current_day.style.color = 'orange';
-    }
-
-    //  set the time and date
-    clockElement.innerHTML  = hour+" : "+min+" : "+sec+"  "+am_pm;
-    clockElement.className = hour+""+min+""+sec+""+am_pm;
-    current_day.innerHTML = day+"/"+month+"/"+year;
-
+    return { formattedHour, min, sec, am_pm };
 }
 
+// Update the clock and date every second
+function setTime() {
+    const date = new Date();
+    const { formattedHour, min, sec, am_pm } = formatTime(date);
 
-//  Pick Time for Alarm in 12 hour format
-function setAlarm(){
-    let alarmList = document.querySelector('.alarmList');
-    let h = document.querySelector('#hour');
-    let m = document.querySelector('#minute');
-    let s = document.querySelector('#second');
-    let am_pm = document.querySelector('#am_pm');
-    let am_pm_value = 'AM';
-    let date = new Date();
-
-    // same thing as done in setTime format
-    let hr = date.getHours();
-    let min = date.getMinutes();
-    let sec = date.getSeconds();
-
-    if(hr>=12){
-        hr = hr - 12;
-        am_pm_value = 'PM';
-    }
-    if(hr==0){
-        hr = 12;
-    }
-
-    if(hr<10){
-        hr = 0+""+hr;
-    }
-
-    if(min<10){
-        min = 0+""+min;
-    }
-
-    if(sec<10){
-        sec = 0+""+sec;
-    }
-
-    // initlally current time is shown is the input
-    h.value = hr;
-    m.value = min;
-    s.value = sec;
-    am_pm.value = am_pm_value;
-
-    // when set alarm button is clicked
-    // initially it checks if the alarm at that time is present or not
-    //  if its present then alert of current time already added is shown
-    setAlarm_btn.addEventListener('click',()=>{
-        let hour = document.querySelector('#hour').value;
-        let minute = document.querySelector('#minute').value;
-        let second = document.querySelector('#second').value;
-        let am_pm = document.querySelector('#am_pm').value;
-        let id = hour+""+minute+""+second+""+am_pm;
-
-        let index = alarms.findIndex((ele)=>{
-            return ele.id===id;
-        })
-        
-        if(index!=-1){
-            alert(`Alarm for ${hour}:${minute}:${second} ${am_pm} is already Set`);
-            return;
-        }
-
-        // Time Object is made for Storing Array of Times
-        let timeObj = {
-            id:id,
-            hour:hour,
-            min:minute,
-            sec:second,
-            ap:am_pm
-        }
-        alarms.push(timeObj);
-
-        // make it empty because we need to recheck the array each time to make new buttons
-        alarmList.innerHTML = '';
-
-        // display the heading when any alarm is set
-        document.querySelector('#myAlarms_heading').style.display = 'block';
-
-        
-        alarms.forEach((currAlarm)=>{
-
-            // for each time element a new button is created
-            let newLi = document.createElement('li');
-            let liElement = `
-                <p class='alarm_list_item_data'>${currAlarm.hour}:${currAlarm.min}:${currAlarm.sec}  ${currAlarm.ap}</p>
-            `;
-            let deleteButton = document.createElement('b');
-            deleteButton.textContent = 'DELETE';
-            deleteButton.classList.add('delete_alarm');
-            deleteButton.id = currAlarm.id;
-            newLi.id = currAlarm.id+"0";
-            newLi.appendChild(deleteButton);
-            newLi.insertAdjacentHTML('afterbegin',liElement);
-            alarmList.appendChild(newLi);
-
-            
-            // delete a particular alarm
-            deleteButton.addEventListener('click',()=>{
-                let currentAlarm =  alarms.findIndex((ele)=>{
-                    return ele.id===deleteButton.id;
-                });
-                newLi.innerHTML = '';
-                //  when deleted remove from array and remove the element
-                alarms.splice(currentAlarm,1);
-            });
-        })
-    })
+    clockElement.textContent = `${formattedHour} : ${min} : ${sec}  ${am_pm}`;
+    clockElement.className = `${formattedHour}${min}${sec}${am_pm}`;
+    currentDay.textContent = date.toLocaleDateString();
+    currentDay.style.color = am_pm === 'PM' ? 'white' : 'orange';
 }
 
-/*  play alarm:
-    - searched in the array each second that if there exists current time in alarm list
-    - if current time is present in alarm list the it is rang
-*/
+// Populate time options for alarm
+function populateTimeOptions() {
+    const hourOption = document.querySelector('#hour');
+    const minuteOption = document.querySelector('#minute');
+    const secondOption = document.querySelector('#second');
 
-function playAlarm(){
-    let shutAlarmBtn = document.querySelector('#shut_alarm_button');
+    for (let i = 1; i <= 12; i++) {
+        const value = String(i).padStart(2, '0');
+        hourOption.insertAdjacentHTML('beforeend', `<option value="${value}">${value}</option>`);
+    }
 
-    alarms.forEach((currAlarm)=>{
-        if(currAlarm.id===clockElement.className){
-            audio.play();
-            // shutAlarmBtn.style.opacity = '1';
-            shutAlarmBtn.style.display='block';
-            
+    for (let i = 0; i < 60; i++) {
+        const value = String(i).padStart(2, '0');
+        const optionTag = `<option value="${value}">${value}</option>`;
+        minuteOption.insertAdjacentHTML('beforeend', optionTag);
+        secondOption.insertAdjacentHTML('beforeend', optionTag);
+    }
+}
 
-            shutAlarmBtn.addEventListener('click',()=>{
-                audio.pause();
-                // shutAlarmBtn.style.opacity = '0';
-                shutAlarmBtn.style.display='none';
-                alert('Alarm Closed');
-            })
-        }
+// Set alarm and manage alarms
+function setAlarm() {
+    const hour = document.querySelector('#hour').value;
+    const minute = document.querySelector('#minute').value;
+    const second = document.querySelector('#second').value;
+    const am_pm = document.querySelector('#am_pm').value;
+    const id = `${hour}${minute}${second}${am_pm}`;
+
+    if (alarms.some(alarm => alarm.id === id)) {
+        alert(`Alarm for ${hour}:${minute}:${second} ${am_pm} is already set`);
+        return;
+    }
+
+    const newAlarm = { id, hour, minute, second, am_pm };
+    alarms.push(newAlarm);
+
+    renderAlarms();
+}
+
+// Render alarms in the list
+function renderAlarms() {
+    alarmList.innerHTML = alarms.map(alarm => `
+        <li id="${alarm.id}0">
+            <p class="alarm_list_item_data">${alarm.hour}:${alarm.minute}:${alarm.second} ${alarm.am_pm}</p>
+            <b class="delete_alarm" id="${alarm.id}">DELETE</b>
+        </li>
+    `).join('');
+
+    document.querySelector('#myAlarms_heading').style.display = alarms.length ? 'block' : 'none';
+
+    document.querySelectorAll('.delete_alarm').forEach(button => {
+        button.addEventListener('click', deleteAlarm);
     });
+}
 
-    if(alarms.length==0){
-        let alarmHeading = document.querySelector('#myAlarms_heading');
-        alarmHeading.style.display = 'none';
+// Delete an alarm
+function deleteAlarm(event) {
+    const id = event.target.id;
+    alarms.splice(alarms.findIndex(alarm => alarm.id === id), 1);
+    renderAlarms();
+}
+
+// Play alarm if the current time matches any alarm
+function playAlarm() {
+    const currentTime = clockElement.className;
+
+    if (alarms.some(alarm => alarm.id === currentTime)) {
+        audio.play();
+        shutAlarmBtn.style.display = 'block';
+
+        shutAlarmBtn.addEventListener('click', () => {
+            audio.pause();
+            shutAlarmBtn.style.display = 'none';
+            alert('Alarm Closed');
+        });
     }
 }
 
-
-// populate tbe date in the options
-// if we hard coded then it would be a lengthy code in html
-// to reduce html lines: loop being used to add elements
-function populateTime(){
-    let hourOption = document.querySelector('#hour');
-    let minuteOption = document.querySelector('#minute');
-    let secondOption = document.querySelector('#second');
-
-    // Hour loop
-    for(let i=12;i>=1;i--){
-        let optionTag = `<option name=0${i} value=${i}>${i}</option>`;
-        if(i<10){
-            optionTag = `<option name=0${i} value=0${i}>0${i}</option>`;
-        }
-        hourOption.insertAdjacentHTML('afterbegin',optionTag);
-    }
-
-    // Minute and second Loop
-    for(let i=59;i>=0;i--){
-        let optionTag = `<option name=0${i} value=${i}>${i}</option>`;
-        if(i<10){
-            optionTag = `<option name=0${i} value=0${i}>0${i}</option>`;
-        }
-        minuteOption.insertAdjacentHTML('afterbegin',optionTag);
-        secondOption.insertAdjacentHTML('afterbegin',optionTag);
-    }
-
+// Toggle light/dark mode
+function toggle() {
+    lightMode = !lightMode;
+    document.body.classList.toggle('dark-mode', !lightMode);
 }
 
-// Toggle function basically used to change the styling of some elements in day and night mode
-
-
-
-populateTime();
-// update time each second
-setInterval(setTime,1000);
-setAlarm();
-// check alarm each second
-setInterval(playAlarm,1000);
-toggleButton.addEventListener('click',toggle);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Initialize
+populateTimeOptions();
+setInterval(setTime, 1000);
+setInterval(playAlarm, 1000);
+setAlarmBtn.addEventListener('click', setAlarm);
+toggleButton.addEventListener('click', toggle);

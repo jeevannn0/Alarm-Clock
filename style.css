@@ -18,7 +18,7 @@ body {
 }
 
 .lhs {
-    border: 1px solid #00ccff; /* Bright blue border */
+    border: 1px solid #9900cc; /* Bright blue border */
     width: 40vw; /* Width of the alarm section */
     margin: 2% auto; /* Centered */
     border-radius: 20px; /* Rounded corners */
@@ -30,7 +30,7 @@ body {
 #alarm_title {
     text-transform: uppercase;
     font-size: 2.2rem; /* Reduced size */
-    color: #00ccff; /* Bright blue */
+    color: #9900cc; /* Bright blue */
     margin-bottom: 1rem; /* Add space below */
 }
 
@@ -42,7 +42,7 @@ body {
 
 #clock {
     font-size: 4rem; /* Larger clock size */
-    color: #00ccff; /* Bright blue for clock */
+    color: #9900cc; /* Bright blue for clock */
     margin-right: 20px; /* Spacing */
 }
 
@@ -60,7 +60,7 @@ body {
 
 .alarm_time, #am_pm {
     margin: 10px 0; /* Space between inputs */
-    border: 1px solid #00ccff; /* Border color */
+    border: 1px solid #9900cc; /* Border color */
     border-radius: 5px; /* Rounded corners */
     padding: 10px; /* Padding for inputs */
     background-color: #f9f9f9; /* Light input background */
@@ -79,14 +79,14 @@ body {
     font-weight: 700;
     padding: 15px 30px; /* Padding for better touch */
     cursor: pointer;
-    background-color: #00ccff; /* Bright blue background */
+    background-color: #9900cc; /* Bright blue background */
     border: none; /* No border */
     border-radius: 5px; /* Rounded */
     transition: 0.3s ease-in-out; /* Smooth transition */
 }
 
 #set_alarm_button:hover {
-    background-color: #0088cc; /* Darker shade on hover */
+    background-color: #9900cc; /* Darker shade on hover */
 }
 
 .myAlarms {

@@ -10,13 +10,7 @@
     <!-- Audio Tag that is used to play the alarm -->
     <audio></audio>
 
-    <!-- 
-        Division of the Application
-        Main
-            - Heading
-            - LHS
-            - RHS
-     -->
+
      
     <main>
         <!-- Heading -->
@@ -30,12 +24,14 @@
         <div class="lhs">
             <!-- clock container with real time clock and date -->
             <div id="clock_container">
-                <p id="clock">00:00:00</p>
                 <p id="date"></p>
+                <br/>
+                <p id="clock">00:00:00</p>
+                
             </div>
         
             <!--
-                 Mid portion of LHS
+                
                  - used to select user input on Time [hour:min:sec AM/PM]
                 -->
             <div id="alarm_container">
@@ -49,22 +45,22 @@
                     <option value="PM">PM</option>
                 </select>
         
-                <button id="set_alarm_button">set Alarm</button>
+                <button id="set_alarm_button">Set Alarm</button>
 
                 <!-- set alarm button
                     By default it is set as invisible
                     When any alarm gets ring this appears
                 -->
-                <button id="shut_alarm_button">SHUT ALARM</button>
+                <button id="shut_alarm_button">Stop Alarm</button>
             </div>
         </div>
     
-        <!-- RHS contains the list of Alarms set -->
+        
         <div class="rhs">
             <!-- Heading which is initially invisible
                 but when any alarm is set it gets displayed    
             -->
-            <h1 id="myAlarms_heading" style="display: none;">My Alarms</h1>
+            <h1 id="myAlarms_heading" style="margin-left: 670px;">My Alarms</h1>
             <div class="myAlarms">
                 <!-- All the alarms are appended inside the UL -->
                 <ul class="alarmList">
